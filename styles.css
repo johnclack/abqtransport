@@ -1,0 +1,228 @@
+
+:root{
+  --accent:#e69138;
+  --accent-2:#ff9f43;
+  --black:#050505;
+  --text:#f7f7f3;
+  --muted:#cfcfcf;
+  --line:rgba(230,145,56,.72);
+}
+*{box-sizing:border-box}
+html,body{
+  margin:0;
+  min-height:100%;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  background:#050505;
+  color:var(--text);
+}
+a{color:inherit}
+.landing{
+  min-height:100vh;
+  display:grid;
+  grid-template-columns:minmax(360px, 500px) 1fr;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.92) 0%, rgba(0,0,0,.64) 42%, rgba(0,0,0,.24) 100%),
+    url("assets/road-background.jpg") center/cover fixed;
+  overflow:hidden;
+}
+.portal{
+  min-height:100vh;
+  padding:clamp(28px,5vw,58px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:28px;
+  background:
+    linear-gradient(135deg, rgba(255,255,255,.08) 0 18%, transparent 18% 52%, rgba(255,255,255,.06) 52% 62%, transparent 62%),
+    linear-gradient(180deg, rgba(6,6,7,.88), rgba(0,0,0,.78));
+  border-right:1px solid rgba(255,255,255,.11);
+  box-shadow:25px 0 70px rgba(0,0,0,.55);
+}
+.logo{
+  width:min(100%, 380px);
+  display:block;
+  border-radius:3px;
+  margin-bottom:22px;
+}
+.tagline{
+  margin:0;
+  font-size:clamp(1.55rem,2.4vw,2rem);
+  line-height:1.22;
+  letter-spacing:-.04em;
+  font-weight:560;
+}
+.accent-line{
+  width:70px;
+  height:4px;
+  margin-top:22px;
+  background:var(--accent);
+  border-radius:999px;
+  box-shadow:0 0 20px rgba(230,145,56,.55);
+}
+.nav-list{display:grid;gap:14px}
+.nav-card{
+  display:grid;
+  grid-template-columns:50px 1fr auto;
+  align-items:center;
+  min-height:62px;
+  padding:10px 18px;
+  border:1.5px solid var(--line);
+  border-radius:11px;
+  color:var(--text);
+  text-decoration:none;
+  background:linear-gradient(90deg, rgba(0,0,0,.74), rgba(18,18,18,.52));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 12px 24px rgba(0,0,0,.26);
+  transition:transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+}
+.nav-card:hover,.nav-card:focus-visible{
+  transform:translateX(5px);
+  background:linear-gradient(90deg, rgba(230,145,56,.20), rgba(18,18,18,.75));
+  border-color:var(--accent-2);
+  box-shadow:0 0 0 3px rgba(230,145,56,.18), 0 16px 28px rgba(0,0,0,.32);
+  outline:none;
+}
+.nav-card svg{
+  width:31px;
+  height:31px;
+  fill:none;
+  stroke:var(--accent-2);
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.nav-card strong{
+  font-size:1.08rem;
+  letter-spacing:-.02em;
+}
+.arrow{
+  color:var(--accent-2);
+  font-size:2rem;
+  line-height:1;
+}
+.phone{
+  margin-top:8px;
+  display:grid;
+  grid-template-columns:34px 1fr;
+  grid-template-areas:"icon num" "icon sub";
+  gap:2px 14px;
+  color:var(--text);
+  text-decoration:none;
+}
+.phone svg{
+  grid-area:icon;
+  width:30px;
+  height:30px;
+  fill:none;
+  stroke:var(--accent-2);
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.phone strong{grid-area:num;font-size:1.55rem;letter-spacing:.02em}
+.phone small{grid-area:sub;color:var(--muted);font-size:.95rem}
+.open-space{min-height:100vh}
+
+/* Interior pages */
+.bg-page{
+  min-height:100vh;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.62)),
+    url("assets/road-background.jpg") center/cover fixed;
+}
+.shell{width:min(1120px, calc(100% - 36px));margin:0 auto}
+.site-header{padding:22px 0}
+.topnav{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.topnav img{width:280px;max-width:70vw;border-radius:3px}
+.toplinks{display:flex;gap:10px;flex-wrap:wrap}
+.toplinks a{padding:9px 12px;border:1px solid rgba(230,145,56,.44);border-radius:999px;text-decoration:none;background:rgba(0,0,0,.32);font-size:.92rem}
+.content-card{margin:18px auto 60px;padding:clamp(24px,4vw,42px);border:1px solid rgba(230,145,56,.44);border-radius:24px;background:rgba(8,8,9,.90);box-shadow:0 28px 80px rgba(0,0,0,.48)}
+.kicker{margin:0 0 10px;color:var(--accent);font-weight:800;text-transform:uppercase;letter-spacing:.14em;font-size:.78rem}
+h1{margin:0;font-size:clamp(2.2rem,5vw,4.3rem);line-height:.95;letter-spacing:-.06em}
+.content-card p{color:#ddd;line-height:1.65;font-size:1.05rem}
+.content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.info-box{border:1px solid rgba(255,255,255,.13);border-radius:18px;padding:20px;background:rgba(255,255,255,.04)}
+.info-box h2{margin:0 0 8px}
+.form-shell{overflow:hidden;padding:0}
+.form-header{padding:clamp(22px,4vw,38px);border-bottom:1px solid rgba(255,255,255,.10)}
+.form-frame{background:#f3f4fb;padding:clamp(14px,3vw,34px)}
+.form-frame iframe{display:block;width:100%;min-height:900px;border:0;background:#fff}
+.notice{margin-top:16px;padding:14px 16px;border-left:4px solid var(--accent);background:rgba(230,145,56,.12);border-radius:10px;color:#eee}
+.back{display:inline-block;margin-top:22px;color:var(--accent);font-weight:750;text-decoration:none}
+
+/* Families & Agencies */
+.action-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+  margin-top:28px;
+}
+.action-card{
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  gap:18px;
+  padding:24px;
+  border:1.5px solid rgba(230,145,56,.72);
+  border-radius:20px;
+  background:linear-gradient(135deg, rgba(0,0,0,.72), rgba(255,255,255,.045));
+  text-decoration:none;
+  box-shadow:0 18px 44px rgba(0,0,0,.28);
+  transition:transform .18s ease, border-color .18s ease, box-shadow .18s ease, background .18s ease;
+}
+.action-card:hover,.action-card:focus-visible{
+  transform:translateY(-4px);
+  border-color:#ff9f43;
+  box-shadow:0 0 0 3px rgba(230,145,56,.16),0 22px 52px rgba(0,0,0,.36);
+  background:linear-gradient(135deg, rgba(230,145,56,.18), rgba(255,255,255,.05));
+  outline:none;
+}
+.action-card h2{margin:0;font-size:clamp(1.4rem,3vw,2rem);letter-spacing:-.045em}
+.action-card p{margin:8px 0 0;color:#d9d9d9;line-height:1.55}
+.card-cta{color:#e69138;font-weight:850;letter-spacing:.01em}
+.dispatch-card{
+  border-color:rgba(230,145,56,.95);
+  background:
+    radial-gradient(circle at 25% 20%, rgba(230,145,56,.28), transparent 16rem),
+    linear-gradient(135deg, rgba(0,0,0,.78), rgba(230,145,56,.09));
+}
+.dispatch-number{
+  font-size:clamp(2.1rem,5vw,3.6rem);
+  line-height:.95;
+  letter-spacing:-.06em;
+  color:#fff;
+  font-weight:900;
+}
+.dispatch-label{color:#e69138;text-transform:uppercase;letter-spacing:.12em;font-size:.78rem;font-weight:850}
+.coming-soon{
+  margin-top:28px;
+  padding:clamp(28px,6vw,58px);
+  border:1.5px solid rgba(230,145,56,.75);
+  border-radius:24px;
+  background:radial-gradient(circle at 24% 22%, rgba(230,145,56,.20), transparent 18rem),rgba(255,255,255,.04);
+  text-align:center;
+}
+.coming-soon h2{margin:0;font-size:clamp(2.4rem,8vw,5.4rem);line-height:.9;letter-spacing:-.075em}
+.tracking-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:28px}
+.tracking-actions a{color:#fff;text-decoration:none;border:1px solid rgba(230,145,56,.75);padding:12px 16px;border-radius:10px;font-weight:800;background:rgba(0,0,0,.35)}
+.tracking-actions a.primary{background:#e69138;border-color:#e69138;color:#111}
+.doc-frame-wrap{margin-top:24px;overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:#111;box-shadow:0 22px 60px rgba(0,0,0,.45)}
+.doc-frame{display:block;width:100%;height:min(78vh,920px);min-height:650px;border:0;background:#fff}
+.safety-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:22px}
+.safety-actions a{color:#fff;text-decoration:none;border:1px solid rgba(230,145,56,.75);padding:11px 16px;border-radius:10px;font-weight:750;background:rgba(0,0,0,.38)}
+@media(max-width:780px){
+  .landing{grid-template-columns:1fr}
+  .portal{width:min(100%,520px);min-height:100vh;padding:28px 22px;justify-content:flex-start}
+  .open-space{display:none}
+  .logo{max-width:360px}
+  .tagline{font-size:1.55rem}
+  .nav-card{min-height:58px}
+  .content-grid,.action-grid{grid-template-columns:1fr}
+  .topnav{align-items:flex-start;flex-direction:column}
+  .action-card{min-height:155px;padding:20px}
+}
+@media(max-width:430px){
+  .portal{background:linear-gradient(180deg, rgba(4,4,5,.92), rgba(0,0,0,.86))}
+  .nav-card{grid-template-columns:42px 1fr auto;padding:8px 13px}
+  .nav-card strong{font-size:1rem}
+}
