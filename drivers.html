@@ -194,7 +194,7 @@
       <span id="driverCount" class="driver-count"></span>
     </div>
 
-    <div id="driverStatus" class="loading">Loading active drivers...</div>
+    <div id="driverStatus" class="loading">Loading drivers...</div>
     <div id="driverList" class="driver-list"></div>
 
     <a class="back" href="index.html">← Back to main menu</a>
@@ -216,7 +216,6 @@
 </div>
 
 <script>
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSqgharnCrWy1nUj0wqUYo3jctIYGKyj8R1F889YTLbzuOY7NWBTCAQv9xq21WwcSxI-HD-2OtDNJtQ/gviz/tq?gid=0&tqx=out:json";
   let allDrivers = [];
 
   const listEl = document.getElementById("driverList");
@@ -231,14 +230,6 @@
   const photoPlaceholder = document.getElementById("photoPlaceholder");
   const credentialRow = document.getElementById("credentialRow");
 
-  function normalizeHeader(header) {
-    return String(header || "").toLowerCase().replace(/[^a-z0-9]/g, "");
-  }
-
-  function yes(value) {
-    return String(value || "").trim().toLowerCase() === "yes";
-  }
-
   function initials(name) {
     return String(name || "AYT")
       .split(/\s+/)
@@ -248,6 +239,7 @@
       .join("")
       .toUpperCase() || "AYT";
   }
+
 
   function drivePhotoUrl(url) {
     const raw = String(url || "").trim();
@@ -266,25 +258,13 @@
     return raw;
   }
 
-  function tableToObjects(table) {
-    const headers = table.cols.map(col => normalizeHeader(col.label || col.id));
-    return table.rows.map(row => {
-      const obj = {};
-      headers.forEach((header, index) => {
-        const cell = row.c[index];
-        obj[header] = cell ? String(cell.f || cell.v || "") : "";
-      });
-      return obj;
-    });
-  }
-
   function renderDrivers(drivers) {
     listEl.innerHTML = "";
-    countEl.textContent = `${drivers.length} active driver${drivers.length === 1 ? "" : "s"}`;
+    countEl.textContent = `${drivers.length} driver${drivers.length === 1 ? "" : "s"}`;
 
     if (!drivers.length) {
       statusEl.className = "loading";
-      statusEl.textContent = "No active drivers found.";
+      statusEl.textContent = "No drivers found.";
       statusEl.style.display = "block";
       return;
     }
@@ -325,8 +305,7 @@
     photoPlaceholder.textContent = initials(driver.name);
     photoPlaceholder.style.display = "block";
 
-    const photo = drivePhotoUrl(driver.photo);
-    if (photo) {
+    if (driver.photo) {
       modalPhoto.onload = () => {
         modalPhoto.classList.add("visible");
         photoPlaceholder.style.display = "none";
@@ -335,13 +314,13 @@
         modalPhoto.classList.remove("visible");
         photoPlaceholder.style.display = "block";
       };
-      modalPhoto.src = photo;
+      modalPhoto.src = drivePhotoUrl(driver.photo);
     }
 
     credentialRow.innerHTML = "";
-    credentialRow.appendChild(credential("Background checked", yes(driver.backgroundcheck)));
-    credentialRow.appendChild(credential("Carseat trained", yes(driver.carseattraining)));
-    credentialRow.appendChild(credential("CPR trained", yes(driver.cprtraining)));
+    credentialRow.appendChild(credential("Background checked", Boolean(driver.backgroundCheck)));
+    credentialRow.appendChild(credential("Carseat trained", Boolean(driver.carseatTraining)));
+    credentialRow.appendChild(credential("CPR trained", Boolean(driver.cprTraining)));
 
     modalBackdrop.classList.add("open");
   }
@@ -363,48 +342,26 @@
     renderDrivers(allDrivers.filter(driver => driver.name.toLowerCase().includes(q)));
   });
 
-  function handleSheetResponse(response) {
+  async function loadDrivers() {
     try {
-      if (!response || response.status === "error" || !response.table) {
-        throw new Error("Google returned no table.");
-      }
+      const response = await fetch("drivers.json", { cache: "no-store" });
+      if (!response.ok) throw new Error("drivers.json could not be loaded.");
 
-      const records = tableToObjects(response.table);
-
-      allDrivers = records
-        .filter(row => yes(row.active))
-        .map(row => ({
-          name: row.name || "",
-          photo: row.photo || "",
-          backgroundcheck: row.backgroundcheck || "",
-          carseattraining: row.carseattraining || "",
-          cprtraining: row.cprtraining || ""
-        }))
-        .filter(driver => driver.name)
+      allDrivers = await response.json();
+      allDrivers = allDrivers
+        .filter(driver => driver && driver.name)
         .sort((a, b) => a.name.localeCompare(b.name));
 
       renderDrivers(allDrivers);
     } catch (error) {
       console.error(error);
       statusEl.className = "error";
-      statusEl.textContent = "The driver list could not be loaded from the published Google Sheet.";
+      statusEl.innerHTML = "The driver list could not be loaded. Make sure <strong>drivers.json</strong> is in the same folder as <strong>drivers.html</strong>.";
       countEl.textContent = "";
     }
   }
 
-  window.google = window.google || {};
-  window.google.visualization = window.google.visualization || {};
-  window.google.visualization.Query = window.google.visualization.Query || {};
-  window.google.visualization.Query.setResponse = handleSheetResponse;
-
-  const script = document.createElement("script");
-  script.src = SHEET_URL;
-  script.onerror = function() {
-    statusEl.className = "error";
-    statusEl.textContent = "The driver list could not be loaded. Make sure the Google Sheet is published to the web.";
-    countEl.textContent = "";
-  };
-  document.body.appendChild(script);
+  loadDrivers();
 </script>
 </body>
 </html>
