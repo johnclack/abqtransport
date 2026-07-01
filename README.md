@@ -1,5 +1,7 @@
-# AYT Website v18
+# AYT Website v19
 
 Updates:
-- Requisitions page now embeds Jotform 243326655513153
-- No requisitions link points to the old site
+- Removed header and description from Families & Agencies
+- Embedded JotForm 230475043223143 on Jobs page
+- Removed job requirements section from Jobs page
+- Removed visible AYT kicker labels from sub-page headers
